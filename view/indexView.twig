@@ -1,0 +1,141 @@
+{% extends "templates/indexLayout.html.twig" %}
+
+{% block busqueda %}
+
+    <div class="modal fade" id="newEvento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Nuevo evento</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3">
+
+                    <form action="index.php?controller=evento&action=crearEvento" method="post">
+                      <div class="md-form mb-5">
+                            <label for="nombreEvento">Nombre</label>
+                            <input type="text" class="form-control" id="nombreEvento" name="nombreEvento" required>
+                        </div>
+                        <div class="md-form mb-5">
+                            <label for="tipoEvento">Tipo</label>
+                            <input type="text" class="form-control" id="tipoEvento" name="tipoEvento">
+                        </div>
+                        <div class="md-form mb-5">
+                            <p>Fecha</p>
+                            <input type="date" class="form-control" id="fechaEvento" name="fechaEvento">
+                        </div>
+                        <div class="md-form mb-5">
+                            <label for="descripcionEvento">Descripcion</label>
+                            <textarea class="form-control" id="descripcionEvento" name="descripcionEvento" rows="4"></textarea>
+                        </div>
+                        <div class="md-form mb-5">
+                            <label for="lugarEvento">Lugar</label>
+                            <input type="text" class="form-control" id="lugarEvento" name="lugarEvento">
+                        </div>
+                        <div class="md-form mb-5 justify-content-between">
+                            <button type="button" class="btn btn-light float-left" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary float-right">Crear</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+
+        <a href="" class="btn btn-outline-primary btn-rounded mt-3" data-toggle="modal" data-target="#newEvento">Añadir evento</a>
+
+        <form class="form-inline md-form form-sm float-right">
+            <i class="fas fa-search" aria-hidden="true"></i>
+            <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="busqueda" aria-label="Search" id="busqueda" name="busqueda">
+        </form>
+
+    </div>
+
+{% endblock %}
+
+{% block contenido %}
+
+    <div class="row text-center justify-content-center mt-3 mb-3">
+
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-12">
+
+            <div class="card example-1 square scrollbar-cyan bordered-cyan">
+            <table id="tablaEventos" class="table">
+                <thead class="black white-text">
+                <tr>
+                    <th class="th-sm">Nombre</th>
+                    <th class="th-sm">Tipo</th>
+                    <th class="th-sm">Fecha</th>
+                    <th class="th-sm">Descripción</th>
+                    <th class="th-sm">Acciones</th>
+                </tr>
+                </thead>
+                <tbody id="tablaEventosBusqueda">
+                    {% for evento in eventos %}
+                        <tr>
+                            <td>{{ evento.nombre }}</td>
+                            <td>{{ evento.tipo }}</td>
+                            <td>{{ evento.fecha }}</td>
+                            <td>{{ evento.descripcion }}</td>
+                            <td id="botonesAcciones">
+                                <button id="modificar" class="btn btn-outline-warning"><span class="far fa-edit"></span></button>
+                                <button id="borrar" class="btn btn-outline-danger btn-rounded"><span class="far fa-trash-alt"></span></button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="m{{ evento.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content bg-dark">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">{{ evento.nombre }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="nombreEvento">Nombre</label>
+                            <input type="text" class="form-control" id="nombreEvento" name="nombreEvento" value="{{ evento.nombre }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="tipoEvento">Tipo</label>
+                            <input type="text" class="form-control" id="tipoEvento" name="tipoEvento" value="{{ evento.tipo }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="fechaEvento">Fecha</label>
+                            <input type="date" class="form-control" id="fechaEvento" name="fechaEvento" value="{{ evento.fecha }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="descripcionEvento">Descripcion</label>
+                            <textarea class="form-control" id="descripcionEvento" name="descripcionEvento" rows="4">{{ evento.descripcion }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="lugarEvento">Lugar</label>
+                            <input type="text" class="form-control" id="lugarEvento" name="lugarEvento" value="{{ evento.idLocal }}">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger float-left">Eliminar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary">Editar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
