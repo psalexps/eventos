@@ -61,4 +61,12 @@ header,
   overflow-y: scroll;
   height: 600px; }
 
+#modalModificar .modalModificarBorder {
+  border-radius: 5px 5px 5px 5px;
+  border: 3px solid #ffbb33 !important; }
+
+.modalanadirBorder {
+  border-radius: 5px 5px 5px 5px;
+  border: 3px solid #4285f4 !important; }
+
 /*# sourceMappingURL=style.css.map */

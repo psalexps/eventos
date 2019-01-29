@@ -4,7 +4,7 @@
 
     <div class="modal fade" id="newEvento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modalanadirBorder" role="document">
             <div class="modal-content">
                 <div class="modal-header text-center">
                     <h4 class="modal-title w-100 font-weight-bold">Nuevo evento</h4>
@@ -32,8 +32,15 @@
                             <textarea class="form-control" id="descripcionEvento" name="descripcionEvento" rows="4"></textarea>
                         </div>
                         <div class="md-form mb-5">
-                            <label for="lugarEvento">Lugar</label>
-                            <input type="text" class="form-control" id="lugarEvento" name="lugarEvento">
+
+                            <p>Lugar</p>
+                            <label for="lugarEvento"></label>
+                            <select class="browser-default custom-select" id="lugarEvento" name="lugarEvento">
+                                {% for local in locales %}
+                                    <option value="{{ local.id }}">{{ local.nombreLocal }}</option>
+                                {% endfor %}
+                            </select>
+
                         </div>
                         <div class="md-form mb-5 justify-content-between">
                             <button type="button" class="btn btn-light float-left" data-dismiss="modal">Cerrar</button>
@@ -82,9 +89,9 @@
                             <td>{{ evento.tipo }}</td>
                             <td>{{ evento.fecha }}</td>
                             <td>{{ evento.descripcion }}</td>
-                            <td id="botonesAcciones">
-                                <button id="modificar" class="btn btn-outline-warning"><span class="far fa-edit"></span></button>
-                                <button id="borrar" class="btn btn-outline-danger btn-rounded"><span class="far fa-trash-alt"></span></button>
+                            <td id="botonesAcciones" class="justify-content-center">
+                                <button id="modificar" class="btn btn-outline-warning" data-toggle="modal" data-target="#modalModificar" data-idevento="{{ evento.id }}" data-nombre="{{ evento.nombre }}" data-tipo="{{ evento.tipo }}" data-fecha="{{ evento.fecha }}" data-descripcion="{{ evento.descripcion }}" data-nombrelocal="{{ evento.nombreLocal }}" data-idlocal="{{ evento.idLocal }}"><span class="far fa-edit"></span></button>
+                                <button id="borrar" class="btn btn-outline-danger btn-rounded" onclick="return eliminar({{ evento.id }})"><span class="far fa-trash-alt"></span></button>
                             </td>
                         </tr>
                     {% endfor %}
@@ -96,46 +103,101 @@
 
     </div>
 
-    <div class="modal fade" id="m{{ evento.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content bg-dark">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">{{ evento.nombre }}</h5>
+    <div class="modal fade" id="modalModificar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modalModificarBorder" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Modificar evento</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="nombreEvento">Nombre</label>
-                            <input type="text" class="form-control" id="nombreEvento" name="nombreEvento" value="{{ evento.nombre }}">
+                <div class="modal-body mx-3">
+
+                    <form id="formModificar" action="#" method="post" onsubmit="return modificar()">
+                        <input type="hidden" name="idEvento" id="idEvento">
+                        <div class="md-form">
+                            <p>Nombre</p>
+                            <label for="nombreEvento"></label>
+                            <input type="text" class="form-control nombreEvento" id="nombreEvento" name="nombreEvento" required>
                         </div>
-                        <div class="form-group">
-                            <label for="tipoEvento">Tipo</label>
-                            <input type="text" class="form-control" id="tipoEvento" name="tipoEvento" value="{{ evento.tipo }}">
+                        <div class="md-form">
+                            <p>Tipo</p>
+                            <label for="tipoEvento"></label>
+                            <input type="text" class="form-control tipoEvento" id="tipoEvento" name="tipoEvento">
                         </div>
-                        <div class="form-group">
-                            <label for="fechaEvento">Fecha</label>
-                            <input type="date" class="form-control" id="fechaEvento" name="fechaEvento" value="{{ evento.fecha }}">
+                        <div class="md-form">
+                            <p>Fecha</p>
+                            <input type="date" class="form-control fechaEvento" id="fechaEvento" name="fechaEvento">
                         </div>
-                        <div class="form-group">
-                            <label for="descripcionEvento">Descripcion</label>
-                            <textarea class="form-control" id="descripcionEvento" name="descripcionEvento" rows="4">{{ evento.descripcion }}</textarea>
+                        <div class="md-form">
+                            <p>Descripcion</p>
+                            <label for="descripcionEvento"></label>
+                            <textarea class="form-control descripcionEvento" id="descripcionEvento" name="descripcionEvento" rows="4"></textarea>
                         </div>
-                        <div class="form-group">
-                            <label for="lugarEvento">Lugar</label>
-                            <input type="text" class="form-control" id="lugarEvento" name="lugarEvento" value="{{ evento.idLocal }}">
+                        <div class="md-form">
+                            <p>Lugar</p>
+                            <label for="lugarEvento"></label>
+                            <h5 id="lugarSelec"></h5>
+                            <select class="browser-default custom-select" id="lugarEvento" name="lugarEvento">
+                                <option id="optionSelected" selected>Elegir otro lugar?</option>
+                                {% for local in locales %}
+                                    <option value="{{ local.idLocal }}">{{ local.nombreLocal }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="md-form justify-content-between">
+                            <button type="button" class="btn btn-light float-left" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary float-right">Guardar</button>
                         </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger float-left">Eliminar</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Editar</button>
                 </div>
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="centralModalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-notify modal-success" role="document">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <p class="heading lead">Datos Actualizados con exito</p>
+                </div>
+
+                <div class="modal-body">
+                    <div class="text-center">
+                        <i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
+                    </div>
+                </div>
+
+                <div class="modal-footer justify-content-center">
+                    <a type="button" id="actualizarPagina" class="btn btn-success" data-dismiss="modal">✔</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="eliminarEvento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-notify modal-danger" role="document">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <p class="heading">Seguro que deseas eliminar este evento</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <a type="button" id="confirmarBorrado" class="btn btn-danger">✔</a>
+                    <a type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">❌</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 
 {% endblock %}

@@ -139,7 +139,7 @@ class Evento{
             "tipo" => $this->tipo,
             "fecha" => $this->fecha,
             "descripcion" => $this->descripcion,
-            "idLocal" => $this->local,
+            "idLocal" => $this->local
         ));
 
         $this->conexion = null;
@@ -147,11 +147,27 @@ class Evento{
 
     public function getAll(){
 
-        $select = $this->conexion->prepare("SELECT * FROM ".$this->table);
+        $select = $this->conexion->prepare("SELECT e.id,e.nombre,e.tipo,e.fecha,e.descripcion,e.idLocal,l.nombreLocal,l.idLocal FROM eventos e,locales l WHERE l.idLocal=e.idLocal");
         $select->execute();
         $result = $select->fetchAll();
         $this->conexion = null;
 
         return $result;
+    }
+
+    public function update(){
+
+        $update = $this->conexion->prepare("UPDATE eventos SET nombre=:nombre,tipo=:tipo,fecha=:fecha,descripcion=:descripcion,idLocal=:idLocal WHERE id=:id");
+
+        $update->execute(array(
+            "nombre" => $this->nombre,
+            "tipo" => $this->tipo,
+            "fecha" => $this->fecha,
+            "descripcion" => $this->descripcion,
+            "idLocal" => $this->local,
+            "id" => $this->id
+        ));
+
+        $this->conexion = null;
     }
 }

@@ -138,5 +138,15 @@ class Local{
         return $result;
     }
 
+    public function getNameId(){
+
+        $select = $this->conexion->prepare("SELECT idLocal,nombreLocal FROM ".$this->table);
+        $select->execute();
+        $result = $select->fetchAll();
+        $this->conexion = null;
+
+        return $result;
+    }
+
 
 }
