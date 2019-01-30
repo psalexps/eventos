@@ -5,7 +5,7 @@ $(document).ready(function () {
         location.reload();
     });
 
-    $('#borrar').click(function () {
+    $('.borrar').click(function () {
         $("#eliminarEvento").modal('show');
     });
 

@@ -21,26 +21,25 @@
                         </div>
                         <div class="md-form mb-5">
                             <label for="tipoEvento">Tipo</label>
-                            <input type="text" class="form-control" id="tipoEvento" name="tipoEvento">
+                            <input type="text" class="form-control" id="tipoEvento" name="tipoEvento" required>
                         </div>
                         <div class="md-form mb-5">
                             <p>Fecha</p>
-                            <input type="date" class="form-control" id="fechaEvento" name="fechaEvento">
+                            <input type="date" class="form-control" id="fechaEvento" name="fechaEvento" required>
                         </div>
                         <div class="md-form mb-5">
                             <label for="descripcionEvento">Descripcion</label>
                             <textarea class="form-control" id="descripcionEvento" name="descripcionEvento" rows="4"></textarea>
                         </div>
                         <div class="md-form mb-5">
-
-                            <p>Lugar</p>
+                            <p class="float-left">Local</p>
+                            <a class="float-right mb-5" href="index.php?controller=local&action=index">¿Añadir local?</a>
                             <label for="lugarEvento"></label>
                             <select class="browser-default custom-select" id="lugarEvento" name="lugarEvento">
                                 {% for local in locales %}
-                                    <option value="{{ local.id }}">{{ local.nombreLocal }}</option>
+                                    <option value="{{ local.idLocal }}">{{ local.nombreLocal }}</option>
                                 {% endfor %}
                             </select>
-
                         </div>
                         <div class="md-form mb-5 justify-content-between">
                             <button type="button" class="btn btn-light float-left" data-dismiss="modal">Cerrar</button>
@@ -91,7 +90,7 @@
                             <td>{{ evento.descripcion }}</td>
                             <td id="botonesAcciones" class="justify-content-center">
                                 <button id="modificar" class="btn btn-outline-warning" data-toggle="modal" data-target="#modalModificar" data-idevento="{{ evento.id }}" data-nombre="{{ evento.nombre }}" data-tipo="{{ evento.tipo }}" data-fecha="{{ evento.fecha }}" data-descripcion="{{ evento.descripcion }}" data-nombrelocal="{{ evento.nombreLocal }}" data-idlocal="{{ evento.idLocal }}"><span class="far fa-edit"></span></button>
-                                <button id="borrar" class="btn btn-outline-danger btn-rounded" onclick="return eliminar({{ evento.id }})"><span class="far fa-trash-alt"></span></button>
+                                <button id="borrar" class="btn btn-outline-danger btn-rounded borrar" onclick="return eliminar({{ evento.id }})"><span class="far fa-trash-alt"></span></button>
                             </td>
                         </tr>
                     {% endfor %}
@@ -137,11 +136,11 @@
                             <textarea class="form-control descripcionEvento" id="descripcionEvento" name="descripcionEvento" rows="4"></textarea>
                         </div>
                         <div class="md-form">
-                            <p>Lugar</p>
+                            <p>Local</p>
                             <label for="lugarEvento"></label>
                             <h5 id="lugarSelec"></h5>
                             <select class="browser-default custom-select" id="lugarEvento" name="lugarEvento">
-                                <option id="optionSelected" selected>Elegir otro lugar?</option>
+                                <option id="optionSelected" selected>Elegir otro local?</option>
                                 {% for local in locales %}
                                     <option value="{{ local.idLocal }}">{{ local.nombreLocal }}</option>
                                 {% endfor %}

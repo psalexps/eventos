@@ -66,6 +66,8 @@ class eventoController extends indexController {
 
         $evento = new Evento($this->conexion);
         $evento->setId($_POST['idEvento']);
+        $evento->delete();
+
     }
 
 }

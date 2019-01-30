@@ -170,4 +170,15 @@ class Evento{
 
         $this->conexion = null;
     }
+
+    public function delete(){
+
+        $delete = $this->conexion->prepare("DELETE FROM eventos WHERE id=:id");
+
+        $delete->execute(array(
+           "id" => $this->id
+        ));
+
+        $this->conexion = null;
+    }
 }
