@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-01-2019 a las 14:03:14
+-- Tiempo de generación: 04-02-2019 a las 08:19:50
 -- Versión del servidor: 10.1.28-MariaDB
 -- Versión de PHP: 7.1.10
 
@@ -42,8 +42,12 @@ CREATE TABLE `eventos` (
 --
 
 INSERT INTO `eventos` (`id`, `nombre`, `tipo`, `fecha`, `descripcion`, `idLocal`) VALUES
-(11, 'Los Hondi', 'Comida', '2019-01-31', 'Organizar una cena con los del trabajo', 1),
-(12, 'Cutum', 'Especial', '2019-02-06', 'Evento especial', 1);
+(12, 'Cutum', 'Especial', '2019-02-06', 'Evento especial', 1),
+(15, 'Flogman', 'Tenio', '2019-03-23', 'Los fedec', 1),
+(16, 'Golic', 'Donit', '2019-01-31', 'Cada uno por su lado amigos del mapolo', 1),
+(17, 'Solac', 'Polin', '2019-01-28', 'Hoy es el dÃ­a de brillar', 1),
+(18, 'Weting', 'Cena', '2019-04-20', 'Cena con la familia', 1),
+(19, 'Qurin', 'CumpleaÃ±os', '2019-01-31', 'Cumple de mi hijita', 2);
 
 -- --------------------------------------------------------
 
@@ -52,8 +56,8 @@ INSERT INTO `eventos` (`id`, `nombre`, `tipo`, `fecha`, `descripcion`, `idLocal`
 --
 
 CREATE TABLE `locales` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(35) COLLATE utf8_spanish_ci NOT NULL,
+  `idLocal` int(11) NOT NULL,
+  `nombreLocal` varchar(35) COLLATE utf8_spanish_ci NOT NULL,
   `categoria` varchar(35) COLLATE utf8_spanish_ci NOT NULL,
   `direccion` varchar(35) COLLATE utf8_spanish_ci NOT NULL,
   `telefono` decimal(9,0) NOT NULL,
@@ -65,8 +69,9 @@ CREATE TABLE `locales` (
 -- Volcado de datos para la tabla `locales`
 --
 
-INSERT INTO `locales` (`id`, `nombre`, `categoria`, `direccion`, `telefono`, `email`, `img`) VALUES
-(1, 'prueba', 'prueba', 'prueba', '111111111', 'prueba@gmail.com', '');
+INSERT INTO `locales` (`idLocal`, `nombreLocal`, `categoria`, `direccion`, `telefono`, `email`, `img`) VALUES
+(1, 'Velino', 'Cena', 'Alfonso 13', '654893874', 'velino@gmail.com', ''),
+(2, 'Rodulo', 'Cumple', 'Geino 3', '954673849', 'rodulo@gmail.com', '');
 
 --
 -- Índices para tablas volcadas
@@ -84,8 +89,8 @@ ALTER TABLE `eventos`
 -- Indices de la tabla `locales`
 --
 ALTER TABLE `locales`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id` (`id`);
+  ADD PRIMARY KEY (`idLocal`),
+  ADD UNIQUE KEY `id` (`idLocal`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -95,13 +100,13 @@ ALTER TABLE `locales`
 -- AUTO_INCREMENT de la tabla `eventos`
 --
 ALTER TABLE `eventos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `locales`
 --
 ALTER TABLE `locales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idLocal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
@@ -111,7 +116,7 @@ ALTER TABLE `locales`
 -- Filtros para la tabla `eventos`
 --
 ALTER TABLE `eventos`
-  ADD CONSTRAINT `fk_locales_eventos` FOREIGN KEY (`idLocal`) REFERENCES `locales` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_locales_eventos` FOREIGN KEY (`idLocal`) REFERENCES `locales` (`idLocal`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
