@@ -79,12 +79,35 @@ function modificar() {
     return false;
 }
 
-function eliminar(idEvento) {
+function eliminar(id, local) {
+
+    if (local.lenght) {
+        $('#confirmarBorrado').click(function () {
+
+            $.ajax({
+                data:  {id: id},
+                url:   'index.php?controller=evento&action=eliminarLocal',
+                type:  'post',
+                success:  function (data) {
+                    $("#eliminarLocal").modal('hide');
+                    setTimeout (function () {
+                        location.reload();
+                    },500);
+                },
+                error: function (data) {
+                    alert("Error "+data);
+                }
+            });
+    
+        });
+    
+        return false;
+    }
 
     $('#confirmarBorrado').click(function () {
 
         $.ajax({
-            data:  {idEvento: idEvento},
+            data:  {id: id},
             url:   'index.php?controller=evento&action=eliminarEvento',
             type:  'post',
             success:  function (data) {
