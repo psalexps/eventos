@@ -148,5 +148,47 @@ class Local{
         return $result;
     }
 
+    public function insert(){
+
+        $insert = $this->conexion->prepare("INSERT INTO locales(nombreLocal,categoria,direccion,telefono,email)
+                                            VALUES(:nombre,:categoria,:direccion,:telefono,:email)");
+
+        $insert->execute(array(
+            "nombre" => $this->nombre,
+            "categoria" => $this->categoria,
+            "direccion" => $this->categoria,
+            "telefono" => $this->telefono,
+            "email" => $this->email
+        ));
+
+        $this->conexion = null;
+    }
+
+    public function update(){
+
+        $update = $this->conexion->prepare("UPDATE locales SET nombreLocal=:nombre,categoria=:categoria,direccion=:direccion,telefono=:telefono,email=:email WHERE idLocal=:id");
+
+        $update->execute(array(
+            "nombre" => $this->nombre,
+            "categoria" => $this->categoria,
+            "direccion" => $this->direccion,
+            "telefono" => $this->telefono,
+            "email" => $this->email,
+            "id" => $this->id
+        ));
+
+        $this->conexion = null;
+    }
+
+    public function delete(){
+
+        $delete = $this->conexion->prepare("DELETE FROM locales WHERE idLocal=:id");
+
+        $delete->execute(array(
+           "id" => $this->id
+        ));
+
+        $this->conexion = null;
+    }
 
 }

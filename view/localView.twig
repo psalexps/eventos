@@ -1,27 +1,81 @@
 {% extends "templates/indexLayout.html.twig" %}
 
+{% block busqueda %}
+
+    <div class="modal fade" id="newLocal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modalanadirBorder" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Nuevo evento</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3">
+
+                    <form action="index.php?controller=local&action=crearLocal" method="post">
+                        <div class="md-form">
+                            <p>Nombre</p>
+                            <label for="nombre"></label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" required>
+                        </div>
+                        <div class="md-form">
+                            <p>Categoría</p>
+                            <label for="categoria"></label>
+                            <input type="text" class="form-control" id="categoria" name="categoria">
+                        </div>
+                        <div class="md-form">
+                            <p>Dirección</p>
+                            <label for="direccion"></label>
+                            <input type="text" class="form-control" id="direccion" name="direccion">
+                        </div>
+                        <div class="md-form">
+                            <p>Teléfono</p>
+                            <label for="telefono"></label>
+                            <input type="number" class="form-control" id="telefono" name="telefono"></input>
+                        </div>
+                        <div class="md-form">
+                            <p>Email</p>
+                            <label for="email"></label>
+                            <input type="email" class="form-control" id="email" name="email"></input>
+                        </div>
+                        <div class="md-form mb-5 justify-content-between">
+                            <button type="button" class="btn btn-light float-left" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary float-right">Crear</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <a href="" class="btn btn-outline-primary btn-rounded mt-3" data-toggle="modal" data-target="#newLocal">Crear local</a>
+    </div>
+
+{% endblock %}
+
 {% block contenido %}
     <div class="row text-center justify-content-center mt-3 mb-3">
 
-        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-12">
-
-                    {% for local in locales %}
-                        <div class="col-4 card pt-4 pb-4">
-                            <h1 class="mb-4">{{ local.nombre|capitalize }}</h1>
-                            <p><strong>Categoría:</strong> {{ local.categoria|capitalize }}</p>
-                            <p><strong>Dirección:</strong> {{ local.direccion|capitalize }}</p>
-                            <p><strong>Teléfono:</strong> {{ local.telefono }}</p>
-                            <span id="botonesAcciones" class="justify-content-center">
-                                <button id="modificar" class="btn btn-outline-warning" data-toggle="modal" data-target="#modalModificar" data-idlocal="{{ local.idLocal }}" data-nombre="{{ local.nombre }}" data-categoria="{{ evento.categoria }}" data-direccion="{{ evento.direccion }}" data-telefono="{{ evento.telefono }}" data-email="{{ evento.email }}"><span class="far fa-edit"></span></button>
-                                <button id="borrar" class="btn btn-outline-danger btn-rounded borrar" onclick="return eliminar({{ local.idLocal }})"><span class="far fa-trash-alt"></span></button>
-                            </span>
-                        </tr>
-                    {% endfor %}
-        </div>
+        {% for local in locales %}
+            <div class="col-4 offset-1 card pt-4 pb-4 mb-5">
+                <h1 class="mb-4">{{ local.nombreLocal|capitalize }}</h1>
+                <p><strong>Categoría:</strong> {{ local.categoria|capitalize }}</p>
+                <p><strong>Dirección:</strong> {{ local.direccion|capitalize }}</p>
+                <p><strong>Teléfono:</strong> {{ local.telefono }}</p>
+                <p><strong>Email:</strong> {{ local.email }}</p>
+                <span id="botonesAcciones" class="justify-content-center">
+                    <button id="modificar" class="btn btn-outline-warning" data-toggle="modal" data-target="#modalModificarLocal" data-idlocal="{{ local.idLocal }}" data-nombre="{{ local.nombreLocal }}" data-categoria="{{ local.categoria }}" data-direccion="{{ local.direccion }}" data-telefono="{{ local.telefono }}" data-email="{{ local.email }}"><span class="far fa-edit"></span></button>
+                    <button id="borrar" class="btn btn-outline-danger btn-rounded borrarLocal" onclick="return eliminarLocal({{ local.idLocal }})"><span class="far fa-trash-alt"></span></button>
+                </span>
+            </div>
+        {% endfor %}
 
     </div>
 
-    <div class="modal fade" id="modalModificar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <div class="modal fade" id="modalModificarLocal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog modalModificarBorder" role="document">
             <div class="modal-content">
@@ -33,32 +87,32 @@
                 </div>
                 <div class="modal-body mx-3">
 
-                    <form id="formModificar" action="#" method="post" onsubmit="return modificar()">
-                        <input type="hidden" name="idEvento" id="idEvento">
+                    <form id="formModificarLocal" action="#" method="post" onsubmit="return modificarL()">
+                        <input type="hidden" name="idLocal" id="idLocal">
                         <div class="md-form">
                             <p>Nombre</p>
-                            <label for="nombreEvento"></label>
-                            <input type="text" class="form-control nombreEvento" id="nombreEvento" name="nombreEvento" required>
+                            <label for="nombre"></label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" required>
                         </div>
                         <div class="md-form">
                             <p>Categoría</p>
-                            <label for="categoriaLocal"></label>
-                            <input type="text" class="form-control categoriaLocal" id="categoriaLocal" name="categoriaLocal">
+                            <label for="categoria"></label>
+                            <input type="text" class="form-control" id="categoria" name="categoria">
                         </div>
                         <div class="md-form">
                             <p>Dirección</p>
-                            <label for="direccionLocal"></label>
-                            <input type="text" class="form-control direccionLocal" id="direccionLocal" name="direccionLocal">
+                            <label for="direccion"></label>
+                            <input type="text" class="form-control" id="direccion" name="direccion">
                         </div>
                         <div class="md-form">
                             <p>Teléfono</p>
-                            <label for="telefonoLocal"></label>
-                            <input class="form-control telefonoLocal" id="telefonoLocal" name="telefonoLocal"></input>
+                            <label for="telefono"></label>
+                            <input type="number" class="form-control" id="telefono" name="telefono"></input>
                         </div>
                         <div class="md-form">
                             <p>Email</p>
-                            <label for="emailLocal"></label>
-                            <input class="form-control emailLocal" id="emailLocal" name="emailLocal"></input>
+                            <label for="email"></label>
+                            <input type="email" class="form-control" id="email" name="email"></input>
                         </div>
                         <div class="md-form justify-content-between">
                             <button type="button" class="btn btn-light float-left" data-dismiss="modal">Cerrar</button>
