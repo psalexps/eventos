@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
 
     $('#actualizarPagina').click(function () {
@@ -8,7 +7,9 @@ $(document).ready(function () {
     $('.borrar').click(function () {
         $("#eliminarEvento").modal('show');
     });
-
+    $('.borrarLocal').click(function () {
+        $("#eliminarLocal").modal('show');
+    });
 });
 
 $('#eventos').click(function () {
@@ -25,10 +26,10 @@ $('#locales').click(function () {
 
 });
 
-$(document).ready(function(){
-    $("#busqueda").on("keyup", function() {
+$(document).ready(function () {
+    $("#busqueda").on("keyup", function () {
         var value = $(this).val().toLowerCase();
-        $("#tablaEventosBusqueda tr").filter(function() {
+        $("#tablaEventosBusqueda tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
@@ -59,20 +60,43 @@ $('#modalModificar').on('show.bs.modal', function (event) {
 
 });
 
+$('#modalModificarLocal').on('show.bs.modal', function (event) {
+
+    var button = $(event.relatedTarget);
+
+    var idLocal = button.data('idlocal');
+    var nombreLocal = button.data('nombre');
+    var categoria = button.data('categoria');
+    var direccion = button.data('direccion');
+    var telefono = button.data('telefono');
+    var email = button.data('email');
+
+    var modal = $(this);
+
+    modal.find('.modal-body #idLocal').val(idLocal);
+    modal.find('.modal-body #nombre').val(nombreLocal);
+    modal.find('.modal-body #categoria').val(categoria);
+    modal.find('.modal-body #direccion').val(direccion);
+    modal.find('.modal-body #telefono').val(telefono);
+    modal.find('.modal-body #email').val(email);
+
+});
+
+
 function modificar() {
 
     var datos = $('#formModificar').serialize();
 
     $.ajax({
-        data:  datos,
-        url:   'index.php?controller=evento&action=modoficarEvento',
-        type:  'post',
-        success:  function (data) {
+        data: datos,
+        url: 'index.php?controller=evento&action=modoficarEvento',
+        type: 'post',
+        success: function (data) {
             $('#modalModificar').modal('hide');
             $("#centralModalSuccess").modal('show');
         },
         error: function (data) {
-            alert("Error "+data);
+            alert("Error " + data);
         }
     });
 
@@ -85,43 +109,93 @@ function eliminar(id, local) {
         $('#confirmarBorrado').click(function () {
 
             $.ajax({
-                data:  {id: id},
-                url:   'index.php?controller=evento&action=eliminarLocal',
-                type:  'post',
-                success:  function (data) {
+                data: {
+                    id: id
+                },
+                url: 'index.php?controller=evento&action=eliminarLocal',
+                type: 'post',
+                success: function (data) {
                     $("#eliminarLocal").modal('hide');
-                    setTimeout (function () {
+                    setTimeout(function () {
                         location.reload();
-                    },500);
+                    }, 500);
                 },
                 error: function (data) {
-                    alert("Error "+data);
+                    alert("Error " + data);
                 }
             });
-    
+
         });
-    
+
         return false;
     }
 
     $('#confirmarBorrado').click(function () {
 
         $.ajax({
-            data:  {id: id},
-            url:   'index.php?controller=evento&action=eliminarEvento',
-            type:  'post',
-            success:  function (data) {
+            data: {
+                id: id
+            },
+            url: 'index.php?controller=evento&action=eliminarEvento',
+            type: 'post',
+            success: function (data) {
                 $("#eliminarEvento").modal('hide');
-                setTimeout (function () {
+                setTimeout(function () {
                     location.reload();
-                },500);
+                }, 500);
             },
             error: function (data) {
-                alert("Error "+data);
+                alert("Error " + data);
             }
         });
 
     });
 
     return false;
+}
+
+function modificarL() {
+
+    var datos = $('#formModificarLocal').serialize();
+    
+    $.ajax({
+        data: datos,
+        url: 'index.php?controller=local&action=modificarLocal',
+        type: 'post',
+        success: function (data) {
+            $('#modalModificarLocal').modal('hide');
+            $("#centralModalSuccess").modal('show');
+        },
+        error: function (data) {
+            alert("Error " + data);
+        }
+    });
+
+    return false;
+}
+
+function eliminarLocal(idLocal) {
+
+    $('#confirmarBorrado').click(function () {
+        $.ajax({
+            data: {
+                idLocal: idLocal
+            },
+            url: 'index.php?controller=local&action=eliminarLocal',
+            type: 'post',
+            success: function (data) {
+                $("#eliminarLocal").modal('hide');
+                setTimeout(function () {
+                    location.reload();
+                }, 500);
+            },
+            error: function (data) {
+                alert("Error " + data);
+            }
+        });
+
+    });
+
+    return false;
+
 }

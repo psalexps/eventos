@@ -51,7 +51,7 @@
     function lanzarAccion($controllerObj){
 
         if (isset($_GET['action'])){
-
+            
             $controllerObj->run($_GET['action']);
         }
         else {
