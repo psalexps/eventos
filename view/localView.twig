@@ -7,7 +7,7 @@
         <div class="modal-dialog modalanadirBorder" role="document">
             <div class="modal-content">
                 <div class="modal-header text-center">
-                    <h4 class="modal-title w-100 font-weight-bold">Nuevo evento</h4>
+                    <h4 class="modal-title w-100 font-weight-bold">Nuevo local</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -15,30 +15,25 @@
                 <div class="modal-body mx-3">
 
                     <form action="index.php?controller=local&action=crearLocal" method="post">
-                        <div class="md-form">
-                            <p>Nombre</p>
-                            <label for="nombre"></label>
+                        <div class="md-form mb-5">
+                            <label for="nombre">Nombre</label>
                             <input type="text" class="form-control" id="nombre" name="nombre" required>
                         </div>
-                        <div class="md-form">
-                            <p>Categoría</p>
-                            <label for="categoria"></label>
+                        <div class="md-form mb-5">
+                            <label for="categoria">Categoría</label>
                             <input type="text" class="form-control" id="categoria" name="categoria">
                         </div>
-                        <div class="md-form">
-                            <p>Dirección</p>
-                            <label for="direccion"></label>
+                        <div class="md-form mb-5">
+                            <label for="direccion">Dirección</label>
                             <input type="text" class="form-control" id="direccion" name="direccion">
                         </div>
-                        <div class="md-form">
-                            <p>Teléfono</p>
-                            <label for="telefono"></label>
-                            <input type="number" class="form-control" id="telefono" name="telefono"></input>
+                        <div class="md-form mb-5">
+                            <label for="telefono">Teléfono</label>
+                            <input type="number" class="form-control" id="telefono" name="telefono" pattern="[6789]{1}[0-9]{8}">
                         </div>
-                        <div class="md-form">
-                            <p>Email</p>
-                            <label for="email"></label>
-                            <input type="email" class="form-control" id="email" name="email"></input>
+                        <div class="md-form mb-5">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email">
                         </div>
                         <div class="md-form mb-5 justify-content-between">
                             <button type="button" class="btn btn-light float-left" data-dismiss="modal">Cerrar</button>
@@ -50,8 +45,8 @@
         </div>
     </div>
 
-    <div class="col-12">
-        <a href="" class="btn btn-outline-primary btn-rounded mt-3" data-toggle="modal" data-target="#newLocal">Crear local</a>
+    <div class="col-12 justify-content-center align-items-center text-center">
+        <a href="" class="btn btn-outline-primary btn-rounded mt-3 col-12 col-sm-5" data-toggle="modal" data-target="#newLocal">Crear local</a>
     </div>
 
 {% endblock %}
@@ -60,7 +55,7 @@
     <div class="row text-center justify-content-center mt-3 mb-3">
 
         {% for local in locales %}
-            <div class="col-4 offset-1 card pt-4 pb-4 mb-5">
+            <div class="col-12 col-sm-12 col-md-8 col-lg-5 col-xl-5 offset-0 card pt-4 pb-4 mb-5 ml-1">
                 <h1 class="mb-4">{{ local.nombreLocal|capitalize }}</h1>
                 <p><strong>Categoría:</strong> {{ local.categoria|capitalize }}</p>
                 <p><strong>Dirección:</strong> {{ local.direccion|capitalize }}</p>
@@ -68,7 +63,7 @@
                 <p><strong>Email:</strong> {{ local.email }}</p>
                 <span id="botonesAcciones" class="justify-content-center">
                     <button id="modificar" class="btn btn-outline-warning" data-toggle="modal" data-target="#modalModificarLocal" data-idlocal="{{ local.idLocal }}" data-nombre="{{ local.nombreLocal }}" data-categoria="{{ local.categoria }}" data-direccion="{{ local.direccion }}" data-telefono="{{ local.telefono }}" data-email="{{ local.email }}"><span class="far fa-edit"></span></button>
-                    <button id="borrar" class="btn btn-outline-danger btn-rounded borrarLocal" onclick="return eliminarLocal({{ local.idLocal }})"><span class="far fa-trash-alt"></span></button>
+                    <button id="borrarLocal" class="btn btn-outline-danger btn-rounded borrarLocal" onclick="return eliminarLocal({{ local.idLocal }})"><span class="far fa-trash-alt"></span></button>
                 </span>
             </div>
         {% endfor %}

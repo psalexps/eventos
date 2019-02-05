@@ -65,7 +65,8 @@ class eventoController extends indexController {
     public function eliminarEvento(){
 
         $evento = new Evento($this->conexion);
-        $evento->setId($_POST['idEvento']);
+        $evento->setId($_POST['id']);
+
         $evento->delete();
 
     }

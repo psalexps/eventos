@@ -2,7 +2,7 @@
 
 {% block busqueda %}
 
-    <div class="modal fade" id="newEvento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <div class="modal fade col-12" id="newEvento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog modalanadirBorder" role="document">
             <div class="modal-content">
@@ -53,9 +53,9 @@
 
     <div class="col-12">
 
-        <a href="" class="btn btn-outline-primary btn-rounded mt-3" data-toggle="modal" data-target="#newEvento">Añadir evento</a>
+        <a href="" class="btn btn-outline-primary btn-rounded mt-3 col-12 col-sm-4" data-toggle="modal" data-target="#newEvento">Añadir evento</a>
 
-        <form class="form-inline md-form form-sm float-right">
+        <form class="form-inline md-form form-sm float-sm-right col-12 col-sm-4 justify-content-center align-items-center">
             <i class="fas fa-search" aria-hidden="true"></i>
             <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="busqueda" aria-label="Search" id="busqueda" name="busqueda">
         </form>
@@ -75,9 +75,9 @@
                 <thead class="black white-text">
                 <tr>
                     <th class="th-sm">Nombre</th>
-                    <th class="th-sm">Tipo</th>
-                    <th class="th-sm">Fecha</th>
-                    <th class="th-sm">Descripción</th>
+                    <th class="th-sm d-none d-sm-table-cell">Tipo</th>
+                    <th class="th-sm d-none d-sm-table-cell">Fecha</th>
+                    <th class="th-sm d-none d-lg-table-cell">Descripción</th>
                     <th class="th-sm">Acciones</th>
                 </tr>
                 </thead>
@@ -85,9 +85,9 @@
                     {% for evento in eventos %}
                         <tr>
                             <td>{{ evento.nombre }}</td>
-                            <td>{{ evento.tipo }}</td>
-                            <td>{{ evento.fecha }}</td>
-                            <td>{{ evento.descripcion }}</td>
+                            <td class="d-none d-sm-table-cell">{{ evento.tipo }}</td>
+                            <td class="d-none d-sm-table-cell">{{ evento.fecha }}</td>
+                            <td class="d-none d-lg-table-cell">{{ evento.descripcion }}</td>
                             <td id="botonesAcciones" class="justify-content-center">
                                 <button id="modificar" class="btn btn-outline-warning" data-toggle="modal" data-target="#modalModificar" data-idevento="{{ evento.id }}" data-nombre="{{ evento.nombre }}" data-tipo="{{ evento.tipo }}" data-fecha="{{ evento.fecha }}" data-descripcion="{{ evento.descripcion }}" data-nombrelocal="{{ evento.nombreLocal }}" data-idlocal="{{ evento.idLocal }}"><span class="far fa-edit"></span></button>
                                 <button id="borrar" class="btn btn-outline-danger btn-rounded borrar" onclick="return eliminar({{ evento.id }})"><span class="far fa-trash-alt"></span></button>

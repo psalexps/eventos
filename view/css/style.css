@@ -15,7 +15,7 @@ header,
 .contenido {
   color: black; }
 
-#borrar, #modificar {
+#borrar, #modificar, #borrarLocal {
   padding: 10px; }
 
 #botonesAcciones {
@@ -61,7 +61,7 @@ header,
   overflow-y: scroll;
   height: 600px; }
 
-#modalModificar .modalModificarBorder {
+#modalModificar .modalModificarBorder, #modalModificarLocal .modalModificarBorder {
   border-radius: 5px 5px 5px 5px;
   border: 3px solid #ffbb33 !important; }
 

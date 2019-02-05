@@ -1,7 +1,9 @@
 $(document).ready(function () {
 
     $('#actualizarPagina').click(function () {
-        location.reload();
+        setTimeout(function () {
+            location.reload();
+        }, 500);
     });
 
     $('.borrar').click(function () {
@@ -103,32 +105,7 @@ function modificar() {
     return false;
 }
 
-function eliminar(id, local) {
-
-    if (local.lenght) {
-        $('#confirmarBorrado').click(function () {
-
-            $.ajax({
-                data: {
-                    id: id
-                },
-                url: 'index.php?controller=evento&action=eliminarLocal',
-                type: 'post',
-                success: function (data) {
-                    $("#eliminarLocal").modal('hide');
-                    setTimeout(function () {
-                        location.reload();
-                    }, 500);
-                },
-                error: function (data) {
-                    alert("Error " + data);
-                }
-            });
-
-        });
-
-        return false;
-    }
+function eliminar(id) {
 
     $('#confirmarBorrado').click(function () {
 
