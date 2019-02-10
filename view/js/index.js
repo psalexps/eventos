@@ -28,15 +28,6 @@ $('#locales').click(function () {
 
 });
 
-$(document).ready(function () {
-    $("#busqueda").on("keyup", function () {
-        var value = $(this).val().toLowerCase();
-        $("#tablaEventosBusqueda tr").filter(function () {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-    });
-});
-
 
 $('#modalModificar').on('show.bs.modal', function (event) {
 

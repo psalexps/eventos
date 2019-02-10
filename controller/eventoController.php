@@ -71,4 +71,28 @@ class eventoController extends indexController {
 
     }
 
+    public function buscar(){
+
+        $evento = new Evento($this->conexion);
+
+        $eventos = [];
+
+        switch ($_POST["busqueda"]) {
+            case 'tipo':
+                $eventos = $evento->getEventoTipo($_POST["busquedaS"]);
+                break;
+            case 'local':
+                $eventos = $evento->getEventoLocal($_POST["busquedaS"]);
+                break;
+            case 'fecha':
+                $eventos = $evento->getEventofecha($_POST["busquedaS"]);
+                break;
+        }
+
+        $this->render('indexView',array(
+            "eventos" => $eventos
+        ));
+
+    }
+
 }

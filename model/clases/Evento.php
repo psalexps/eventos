@@ -147,7 +147,7 @@ class Evento{
 
     public function getAll(){
 
-        $select = $this->conexion->prepare("SELECT e.id,e.nombre,e.tipo,e.fecha,e.descripcion,e.idLocal,l.nombreLocal,l.idLocal FROM eventos e,locales l WHERE l.idLocal=e.idLocal");
+        $select = $this->conexion->prepare("SELECT e.id,e.nombre,e.tipo,e.fecha,e.lugar,e.descripcion,e.idLocal,l.nombreLocal,l.idLocal FROM eventos e,locales l WHERE l.idLocal=e.idLocal");
         $select->execute();
         $result = $select->fetchAll();
         $this->conexion = null;
@@ -180,5 +180,44 @@ class Evento{
         ));
 
         $this->conexion = null;
+    }
+
+    public function getEventoTipo($tipo){
+
+        $select = $this->conexion->prepare("SELECT e.id,e.nombre,e.tipo,e.fecha,e.lugar,e.descripcion,e.idLocal,l.nombreLocal,l.idLocal FROM eventos e,locales l WHERE l.idLocal=e.idLocal and tipo LIKE '%".$tipo."%'");
+
+        $select->execute();
+
+        $resul = $select->fetchAll();
+
+        $this->conexion = null;
+
+        return $resul;
+    }
+
+    public function getEventoLocal($local){
+
+        $select = $this->conexion->prepare("SELECT e.id,e.nombre,e.tipo,e.fecha,e.lugar,e.descripcion,e.idLocal,l.nombreLocal,l.idLocal FROM eventos e,locales l WHERE l.idLocal=e.idLocal and l.nombreLocal like '%".$local."%'");
+
+        $select->execute();
+
+        $resul = $select->fetchAll();
+
+        $this->conexion = null;
+
+        return $resul;
+    }
+
+    public function getEventoFecha($fecha){
+
+        $select = $this->conexion->prepare("SELECT e.id,e.nombre,e.tipo,e.fecha,e.lugar,e.descripcion,e.idLocal,l.nombreLocal,l.idLocal FROM eventos e,locales l WHERE l.idLocal=e.idLocal and fecha like '%.$fecha.%'");
+
+        $select->execute();
+
+        $resul = $select->fetchAll();
+
+        $this->conexion = null;
+
+        return $resul;
     }
 }

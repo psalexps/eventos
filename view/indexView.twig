@@ -55,10 +55,25 @@
 
         <a href="" class="btn btn-outline-primary btn-rounded mt-3 col-12 col-sm-4" data-toggle="modal" data-target="#newEvento">Añadir evento</a>
 
-        <form class="form-inline md-form form-sm float-sm-right col-12 col-sm-4 justify-content-center align-items-center">
-            <i class="fas fa-search" aria-hidden="true"></i>
-            <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="busqueda" id="busqueda" name="busqueda">
-        </form>
+        <div class="md-form form-sm float-sm-right col-12 col-sm-4 justify-content-center align-items-center">
+            <form action="index.php?controller=evento&action=buscar" method="post">
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="tipo" name="busqueda" value="tipo" checked>
+                    <label class="custom-control-label" for="tipo">Por tipo</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="fecha" name="busqueda" value="fecha">
+                    <label class="custom-control-label" for="fecha">Por fecha</label>
+                </div>
+                <div class="custom-control custom-radio mb-2">
+                    <input type="radio" class="custom-control-input" id="local" name="busqueda" value="local">
+                    <label class="custom-control-label" for="local">Por local</label>
+                </div>
+                <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="busqueda" id="busqueda" name="busquedaS">
+                <button type="submit" class="btn-primary">Buscar</button>
+            </form>
+
+        </div>
 
     </div>
 
@@ -77,16 +92,18 @@
                     <th class="th-sm">Nombre</th>
                     <th class="th-sm d-none d-sm-table-cell">Tipo</th>
                     <th class="th-sm d-none d-sm-table-cell">Fecha</th>
+                    <th class="th-sm d-none d-sm-table-cell">Local</th>
                     <th class="th-sm d-none d-lg-table-cell">Descripción</th>
                     <th class="th-sm">Acciones</th>
                 </tr>
                 </thead>
-                <tbody id="tablaEventosBusqueda">
+                <tbody>
                     {% for evento in eventos %}
                         <tr>
                             <td>{{ evento.nombre }}</td>
                             <td class="d-none d-sm-table-cell">{{ evento.tipo }}</td>
                             <td class="d-none d-sm-table-cell">{{ evento.fecha }}</td>
+                            <th class="th-sm d-none d-sm-table-cell">{{ evento.nombreLocal }}</th>
                             <td class="d-none d-lg-table-cell">{{ evento.descripcion }}</td>
                             <td id="botonesAcciones" class="justify-content-center">
                                 <button id="modificar" class="btn btn-outline-warning" data-toggle="modal" data-target="#modalModificar" data-idevento="{{ evento.id }}" data-nombre="{{ evento.nombre }}" data-tipo="{{ evento.tipo }}" data-fecha="{{ evento.fecha }}" data-descripcion="{{ evento.descripcion }}" data-nombrelocal="{{ evento.nombreLocal }}" data-idlocal="{{ evento.idLocal }}"><span class="far fa-edit"></span></button>
