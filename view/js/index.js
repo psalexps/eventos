@@ -91,7 +91,7 @@ function modificar() {
 
     $.ajax({
         data: datos,
-        url: 'index.php?controller=evento&action=modoficarEvento',
+        url: 'api/evento/modificar',
         type: 'post',
         success: function (data) {
             $('#modalModificar').modal('hide');
@@ -113,7 +113,7 @@ function eliminar(id) {
             data: {
                 id: id
             },
-            url: 'index.php?controller=evento&action=eliminarEvento',
+            url: 'api/evento/eliminar',
             type: 'post',
             success: function (data) {
                 $("#eliminarEvento").modal('hide');
@@ -137,7 +137,7 @@ function modificarL() {
     
     $.ajax({
         data: datos,
-        url: 'index.php?controller=local&action=modificarLocal',
+        url: 'api/local/modificar',
         type: 'post',
         success: function (data) {
             $('#modalModificarLocal').modal('hide');
@@ -158,7 +158,7 @@ function eliminarLocal(idLocal) {
             data: {
                 idLocal: idLocal
             },
-            url: 'index.php?controller=local&action=eliminarLocal',
+            url: 'api/local/eliminar',
             type: 'post',
             success: function (data) {
                 $("#eliminarLocal").modal('hide');

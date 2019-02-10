@@ -1,0 +1,6 @@
+RewriteEngine On
+
+RewriteRule ^api/evento/eliminar([0-9]*)$ index.php?controller=evento&action=eliminarEvento
+RewriteRule ^api/evento/modificar([0-9]*)$ index.php?controller=evento&action=modoficarEvento
+RewriteRule ^api/local/eliminar([0-9]*)$ index.php?controller=local&action=eliminarLocal
+RewriteRule ^api/local/modificar([0-9]*)$ index.php?controller=local&action=modificarLocal
